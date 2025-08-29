@@ -22,6 +22,13 @@ public class RegistroLlegada {
 		this.ultimaPosicionAlcanzada = ultimaPosicionAlcanzada;
 	}
 
+	public synchronized int asignarPosicion(String nombreGalgo) {
+        int posicion = ultimaPosicionAlcanzada++;
+        if (posicion == 1) {
+            ganador = nombreGalgo;
+        }
+        return posicion;
+    }
 	
 	
 }

@@ -75,3 +75,55 @@ Taller.
     
     2.2. Los galgos, cuando están suspendidos, son reactivados son sólo un llamado (usando un monitor común).
 
+
+
+
+
+solucion:
+1. Mostrar resultados solo al terminar la carrera
+
+Archivo: MainCanodromo.java.
+
+Qué pasaba: el diálogo y el mensaje de ganador se mostraban antes de que terminaran todos los galgos.
+
+Solución: usar join() para esperar a que cada hilo termine:
+
+
+for (int i = 0; i < can.getNumCarriles(); i++) {
+    galgos[i].join();
+}
+
+
+2. Problema de inconsistencias
+
+Al correr varias veces, el ganador y las posiciones podían ser incorrectos.
+
+Causa: varios hilos accedían al mismo tiempo a RegistroLlegada para actualizar la posición y asignar el ganador.
+
+Región crítica: leer y actualizar ultimaPosicionAlcanzada + asignar ganador.
+
+
+3. Solución con sincronización
+
+Archivo: RegistroLlegada.java.
+
+Método nuevo sincronizado:
+
+public synchronized int asignarPosicion(String nombreGalgo) {
+    int posicion = ultimaPosicionAlcanzada++;
+    if (posicion == 1) {
+        ganador = nombreGalgo;
+    }
+    return posicion;
+}
+En Galgo.java: reemplazar la actualización manual por:
+int ubicacion = regl.asignarPosicion(this.getName());
+
+
+Resultado:
+
+Solo un hilo a la vez puede actualizar la posición y asignar ganador.
+
+El ganador siempre es el que llega primero.
+
+El total de corredores siempre coincide con el número de carriles.
