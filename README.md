@@ -44,6 +44,19 @@ Taller.
 
     b.  Puede utilizarse el método join() de la clase Thread para sincronizar el hilo que inicia la carrera, con la finalización de los hilos de los galgos.
 
+    **Solución**
+    
+    Archivo: MainCanodromo.java.
+
+    Qué pasaba: El diálogo y el mensaje de ganador se mostraban antes de que terminaran todos los galgos.
+
+    Solución: Usar `join()` para esperar a que cada hilo termine:
+    <pre>
+        for (int i = 0; i < can.getNumCarriles(); i++) {
+            galgos[i].join();
+        } 
+    </pre>
+
 2.  Una vez corregido el problema inicial, corra la aplicación varias
     veces, e identifique las inconsistencias en los resultados de las
     mismas viendo el ‘ranking’ mostrado en consola (algunas veces
@@ -51,9 +64,32 @@ Taller.
     dichas inconsistencias). A partir de esto, identifique las regiones
     críticas () del programa.
 
+    **Solución**
+
+    Al correr varias veces, el ganador y las posiciones podían ser incorrectos.
+
+    Causa: Varios hilos accedían al mismo tiempo a RegistroLlegada para actualizar la posición y asignar el ganador.
+
+    Región crítica: Leer y actualizar ultimaPosicionAlcanzada + asignar ganador.
+
 3.  Utilice un mecanismo de sincronización para garantizar que a dichas
     regiones críticas sólo acceda un hilo a la vez. Verifique los
     resultados.
+
+    **Solución**
+
+    Archivo: RegistroLlegada.java.
+
+    Método nuevo sincronizado:
+    IMAGEN ACA
+
+    En Galgo.java se reemplaza la actualización manual por:
+    <pre> int ubicacion = regl.asignarPosicion(this.getName()); </pre>
+
+    Resultados:
+    - Solo un hilo a la vez puede actualizar la posición y asignar ganador.
+    - El ganador siempre es el que llega primero.
+    - El total de corredores siempre coincide con el número de carriles.
 
 4.  Implemente las funcionalidades de pausa y continuar. Con estas,
     cuando se haga clic en ‘Stop’, todos los hilos de los galgos
@@ -74,56 +110,3 @@ Taller.
     2.1. Se hace una sincronización de sólo la región crítica (sincronizar, por ejemplo, todo un método, bloquearía más de lo necesario).
     
     2.2. Los galgos, cuando están suspendidos, son reactivados son sólo un llamado (usando un monitor común).
-
-
-
-
-
-solucion:
-1. Mostrar resultados solo al terminar la carrera
-
-Archivo: MainCanodromo.java.
-
-Qué pasaba: el diálogo y el mensaje de ganador se mostraban antes de que terminaran todos los galgos.
-
-Solución: usar join() para esperar a que cada hilo termine:
-
-
-for (int i = 0; i < can.getNumCarriles(); i++) {
-    galgos[i].join();
-}
-
-
-2. Problema de inconsistencias
-
-Al correr varias veces, el ganador y las posiciones podían ser incorrectos.
-
-Causa: varios hilos accedían al mismo tiempo a RegistroLlegada para actualizar la posición y asignar el ganador.
-
-Región crítica: leer y actualizar ultimaPosicionAlcanzada + asignar ganador.
-
-
-3. Solución con sincronización
-
-Archivo: RegistroLlegada.java.
-
-Método nuevo sincronizado:
-
-public synchronized int asignarPosicion(String nombreGalgo) {
-    int posicion = ultimaPosicionAlcanzada++;
-    if (posicion == 1) {
-        ganador = nombreGalgo;
-    }
-    return posicion;
-}
-En Galgo.java: reemplazar la actualización manual por:
-int ubicacion = regl.asignarPosicion(this.getName());
-
-
-Resultado:
-
-Solo un hilo a la vez puede actualizar la posición y asignar ganador.
-
-El ganador siempre es el que llega primero.
-
-El total de corredores siempre coincide con el número de carriles.
