@@ -1,4 +1,3 @@
-### Escuela Colombiana de Ingeniería
 ### Arquitecturas de Software - ARSW
 ## Autores: Emily Noreña y Haider Rodriguez
 
@@ -110,19 +109,32 @@ Taller.
       <img src="img/synchronized.png" width="500"/><br>
     </p>
 
+   Con el modificador synchronized, se garantiza que solo un hilo a la vez puede ejecutar este     método sobre el mismo objeto, lo que asegura exclusión mutua en el acceso a las variables       compartidas. De esta forma, cada hilo obtiene una posición única en la carrera y se evita la    condición de carrera. Sin esta sincronización, varios hilos podrían acceder simultáneamente     al método y asignarse la misma posición, provocando inconsistencias como tener más de un        ganador en el primer lugar.
 
-    En Galgo.java se reemplaza la actualización manual por:
-    <pre> int ubicacion = regl.asignarPosicion(this.getName()); </pre>
+  En Galgo.java se reemplaza la actualización manual por:
+    
+  <pre> int ubicacion = regl.asignarPosicion(this.getName()); </pre>
 
-    Resultados:
-    - Solo un hilo a la vez puede actualizar la posición y asignar ganador.
-    - El ganador siempre es el que llega primero.
-    - El total de corredores siempre coincide con el número de carriles.
+  Resultados:
+  - Solo un hilo a la vez puede actualizar la posición y asignar ganador.
+  - El ganador siempre es el que llega primero.
+  - El total de corredores siempre coincide con el número de carriles.
 
 4.  Implemente las funcionalidades de pausa y continuar. Con estas,
     cuando se haga clic en ‘Stop’, todos los hilos de los galgos
     deberían dormirse, y cuando se haga clic en ‘Continue’ los mismos
     deberían despertarse y continuar con la carrera. Diseñe una solución que permita hacer esto utilizando los mecanismos de sincronización con las primitivas de los Locks provistos por el lenguaje (wait y notifyAll).
+
+    **Clase Galgo**
+    <p align="center">
+      <img src="img/corra.png" width="500"/><br>
+      <em>Se crea el atributo booleano paused</em>
+    </p>
+
+    **Stop and Continue**
+    <p align="center">
+      <img src="img/stop and continue.png" width="500"/><br>
+    </p>
 
 
 ## Criterios de evaluación
