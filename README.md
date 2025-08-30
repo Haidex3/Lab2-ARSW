@@ -29,12 +29,15 @@ Creación, puesta en marcha y coordinación de hilos.
 </p>
 
 <p align="center">
-  <img src="img/un hilo.jpg" width="750"/><br>
-  <em>Uso de núcleos de procesador</em>
+  <img src="img/tres hilos procesos.jpg" width="750"/><br>
+  <em>Proceso ejecutando tres hilos</em>
 </p>
 
 3. Lo que se le ha pedido es: debe modificar la aplicación de manera que cuando hayan transcurrido 5 segundos desde que se inició la ejecución, se detengan todos los hilos y se muestre el número de primos encontrados hasta el momento. Luego, se debe esperar a que el usuario presione ENTER para reanudar la ejecución de los mismo.
 
+<p align="center">
+  <img src="img/detener 5s desp.png" width="500"/><br>
+</p>
 
 
 ##### Parte II 
@@ -102,7 +105,11 @@ Taller.
     Archivo: RegistroLlegada.java.
 
     Método nuevo sincronizado:
-    IMAGEN ACA
+    
+    <p align="center">
+      <img src="img/synchronized.png" width="500"/><br>
+    </p>
+
 
     En Galgo.java se reemplaza la actualización manual por:
     <pre> int ubicacion = regl.asignarPosicion(this.getName()); </pre>
