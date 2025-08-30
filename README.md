@@ -137,6 +137,9 @@ Taller.
     </p>
 
 
+Se implementa un mecanismo de control de hilos en la simulación de la carrera de galgos, donde cada hilo puede entrar en estado de espera mediante un flag paused y la instrucción `wait()`, y posteriormente ser reanudado con `notify()`. Esto permite pausar y continuar la ejecución concurrente de forma sincronizada, garantizando exclusión mutua y evitando condiciones de carrera.
+
+
 ## Criterios de evaluación
 
 1. Funcionalidad.
